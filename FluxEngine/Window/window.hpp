@@ -12,6 +12,7 @@
 #include "../Math/math.h"
 #include "../Camera/camera.h"
 #include "../Sprite/sprite.h"
+#include "../Error/error.h"
 
 class Window {
 private:
@@ -25,7 +26,7 @@ private:
 
     unsigned int VBO, VAO, EBO, lightVAO;
     int  width, height;
-    int currentFrame;
+    int currentFrame = 0;
 
     const char* title;
 
@@ -37,8 +38,8 @@ public:
     void setMap(Map* map) { currentMap = map; }
     void addSprite(const Sprite& sprite);
     void drawSpriteList();
-    void render();
-    void close();
+    virtual void render();
+    virtual void close();
     void loadGameScript();
 };
 

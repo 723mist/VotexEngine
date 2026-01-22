@@ -1,4 +1,5 @@
 #include "../Window/window.hpp"
+#include "Error/error.h"
 #include <iostream>
 
 float FOV = 90;
@@ -17,6 +18,7 @@ void Window::render() {
     vec3 lightColor(1.0f, 1.0f, 1.0f);
     vec3 toyColor(1.0f, 0.5f, 0.31f);
     vec3 result = lightColor * toyColor;
+    Error Error1;
     //texture.LoadTexture("Content/water.jpg");
 
     while (!glfwWindowShouldClose(window)) {
@@ -75,6 +77,9 @@ void Window::render() {
             ourShader->setMat4("model", model);
             glDrawArrays(GL_TRIANGLES, 0, 36);
         }
+
+        Error1.addToErrorList("ERROR1");
+        Error1.printEngineERROR();
 
         drawSpriteList();
         glfwSwapBuffers(window);
