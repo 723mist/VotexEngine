@@ -1,15 +1,5 @@
-
-/build/Desktop-Debug
 /libs
-/build/CMakeFiles
-.qtcreator/CMakeLists.txt.user
-build/cmake_install.cmake
-build/CMakeCache.txt
-build/FE
-build/FE
-build/FE
+/.qtcreator
+/.vscode
 /ContentBackup
-build/FE
-build/Content/placeholder (копия).jpg
-build/Makefile
-build/FE
+/build

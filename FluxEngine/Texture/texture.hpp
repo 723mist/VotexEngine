@@ -3,7 +3,8 @@
 
 #define GLEW_STATIC
 #include <string>
-#include <GL/glew.h>
+//#include <GL/glew.h>
+#include <GL/gl3w.h>
 #include <GLFW/glfw3.h>
 
 class Texture {

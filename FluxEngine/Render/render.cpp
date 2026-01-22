@@ -1,4 +1,5 @@
 #include "../Window/window.hpp"
+#include <iostream>
 
 float FOV = 90;
 
@@ -19,7 +20,11 @@ void Window::render() {
     //texture.LoadTexture("Content/water.jpg");
 
     while (!glfwWindowShouldClose(window)) {
+        currentFrame = currentFrame + 1;
+        std::cout << currentFrame << std::endl;
         glfwPollEvents();
+        glfwGetFramebufferSize(window, &width, &height);
+        glViewport(0, 0, width, height);
 
         processInput(window);
 
@@ -41,7 +46,7 @@ void Window::render() {
 
         //mat4 view = fluxmath::lookAt();
 
-        mat4 projection = fluxmath::perspective(fluxmath::radians(FOV), (float)width/(float)height, 0.1f, 100.0f);;
+        mat4 projection = fluxmath::perspective(fluxmath::radians(FOV), (float)width/(float)height, 0.1f, 100.0f);
 
         //mat4 view = camera.GetViewMatrix();
         //mat4 projection = camera.GetProjectionMatrix((float)width/(float)height);

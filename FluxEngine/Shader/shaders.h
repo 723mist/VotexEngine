@@ -3,7 +3,8 @@
 #ifndef SHADER_H
 #define SHADER_H
 
-#include <GL/glew.h>
+#include <GL/gl3w.h>
+//#include "../libs/gl3w/include/GL/gl3w.h"
 
 #include <string>
 #include <fstream>

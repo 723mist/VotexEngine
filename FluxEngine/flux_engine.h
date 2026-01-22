@@ -11,5 +11,6 @@
 #include "Math/math.h"
 #include "Light/light.h"
 #include "Camera/camera.h"
+#include "Script/script.h"
 
 #endif

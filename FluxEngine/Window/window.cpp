@@ -1,13 +1,21 @@
 #include "window.hpp"
 
+void glfw_error_callback(int error, const char* description) {
+    std::cerr << "GLFW Error: " << error << ". " << "Description: " << description << std::endl;
+}
+
 void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
     glViewport(0, 0, width, height);
 }
 
 bool Window::create(const char* title, int width, int height) {
+    //glfwWindowHint(GLFW_PLATFORM, GLFW_PLATFORM_WAYLAND);
+
     this->title = title;
     this->width = width;
     this->height = height;
+
+    glfwSetErrorCallback(glfw_error_callback);
 
     if (!glfwInit()) {
         std::cout << "Failed to initialize GLFW" << std::endl;
@@ -33,10 +41,8 @@ bool Window::create(const char* title, int width, int height) {
     }
 
     glfwMakeContextCurrent(window);
-
-    glewExperimental = GL_TRUE;
-    if (glewInit() != GLEW_OK) {
-        std::cout << "Failed to initialize GLEW" << std::endl;
+    if (gl3wInit()) {
+        std::cerr << "Failed to initialize GL3W" << std::endl;
         glfwTerminate();
         return false;
     }
@@ -135,11 +141,24 @@ void Window::drawSpriteList() {
 
     spriteShader->use();
 
+    int fbw, fbh;
+    glfwGetFramebufferSize(window, &fbw, &fbh);
+
+    mat4 ortho = fluxmath::ortho(0.0f, (float)fbw, (float)fbh, 0.0f, -1.0f, 1.0f);
+
     for (auto& sprite : sprites) {
-        float x = (sprite.position.x / width) * 2.0f - 1.0f;
-        float y = 1.0f - (sprite.position.y / height) * 2.0f;
-        float w = (sprite.size.x / width) * 2.0f;
-        float h = (sprite.size.y / height) * 2.0f;
+        /*float x = (sprite.position.x / fbw) * 2.0f - 1.0f;
+        float y = 1.0f - (sprite.position.y / fbh) * 2.0f;
+        float w = (sprite.size.x / fbw) * 2.0f;
+        float h = (sprite.size.y / fbh) * 2.0f;*/
+
+        float x = sprite.position.x - (sprite.size.x / 2.0f);
+        float y = sprite.position.y - (sprite.size.y / 2.0f);
+        float w = sprite.size.x;
+        float h = sprite.size.y;
+
+        //std::cout << fbw << "x" << fbh << std::endl;
+        std::cout << x << "x" << y << std::endl;
 
         float vertices[] = {
             x,     y,     0.0f, 0.0f,
@@ -173,6 +192,7 @@ void Window::drawSpriteList() {
 
         sprite.texture.bindTexture(0);
         spriteShader->setInt("texture1", 0);
+        spriteShader->setMat4("projection", ortho);
 
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 

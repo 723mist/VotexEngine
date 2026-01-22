@@ -52,6 +52,7 @@ inline mat4 lookAt(const vec3& eye, const vec3& center, const vec3& up) {
     result[3] = vec4(-vec3::dot(r, eye), -vec3::dot(u, eye), vec3::dot(f, eye), 1);
     return result;
 }
+
 inline mat4 perspective(float fov, float aspect, float near, float far) {
     mat4 result;
     float tanHalfFov = std::tan(fov / 2.0f);
@@ -61,6 +62,20 @@ inline mat4 perspective(float fov, float aspect, float near, float far) {
     result[1] = vec4(0, f, 0, 0);
     result[2] = vec4(0, 0, -(far + near) / (far - near), -1.0f);
     result[3] = vec4(0, 0, -(2.0f * far * near) / (far - near), 0);
+    return result;
+}
+
+inline mat4 ortho(float left, float right, float bottom, float top, float nearZ, float farZ) {
+    mat4 result;
+
+    result.data[0][0] = 2.0f / (right - left);
+    result.data[1][1] = 2.0f / (top - bottom);
+    result.data[2][2] = -2.0f / (nearZ - farZ);
+
+    result.data[3][0] = -(right + left) / (right - left);
+    result.data[3][1] = -(top + bottom) / (top - bottom);
+    result.data[3][2] = -(farZ + nearZ) / (farZ - nearZ);
+
     return result;
 }
 

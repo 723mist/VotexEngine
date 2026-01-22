@@ -1,7 +1,7 @@
 #ifndef WINDOW_HPP
 #define WINDOW_HPP
 
-#include <GL/glew.h>
+#include <GL/gl3w.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
 #include "Shader/shaders.h"
@@ -23,7 +23,9 @@ private:
     Object object;
     std::vector<Sprite> sprites;
 
-    unsigned int width, height, VBO, VAO, EBO, lightVAO;
+    unsigned int VBO, VAO, EBO, lightVAO;
+    int  width, height;
+    int currentFrame;
 
     const char* title;
 
@@ -37,6 +39,7 @@ public:
     void drawSpriteList();
     void render();
     void close();
+    void loadGameScript();
 };
 
 #endif
