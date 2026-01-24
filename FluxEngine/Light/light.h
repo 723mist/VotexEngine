@@ -5,9 +5,7 @@
 
 class Light {
 public:
-    void AddLight(vec3 lightPos, vec3 lightRot) {
-
-    }
+    //Later
 };
 
 #endif

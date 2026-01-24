@@ -1,4 +1,5 @@
 #include "window.hpp"
+#include "Error/error.h"
 
 void glfw_error_callback(int error, const char* description) {
     std::cerr << "GLFW Error: " << error << ". " << "Description: " << description << std::endl;
@@ -9,17 +10,15 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
 }
 
 bool Window::create(const char* title, int width, int height) {
-    //glfwWindowHint(GLFW_PLATFORM, GLFW_PLATFORM_WAYLAND);
-
     this->title = title;
     this->width = width;
     this->height = height;
+    Error error;
 
     glfwSetErrorCallback(glfw_error_callback);
 
     if (!glfwInit()) {
-        std::cout << "Failed to initialize GLFW" << std::endl;
-        return false;
+        error.addToCriticalErrorList("Failed to initialize GLFW");
     }
 
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -35,16 +34,12 @@ bool Window::create(const char* title, int width, int height) {
     window = glfwCreateWindow(width, height, title, NULL, NULL);
 
     if (window == NULL) {
-        std::cout << "Failed to create GLFW window" << std::endl;
-        glfwTerminate();
-        return false;
+        error.addToCriticalErrorList("Failed to create GLFW window");
     }
 
     glfwMakeContextCurrent(window);
     if (gl3wInit()) {
-        std::cerr << "Failed to initialize GL3W" << std::endl;
-        glfwTerminate();
-        return false;
+        error.addToCriticalErrorList("Failed to initialize GL3W");
     }
 
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
@@ -147,11 +142,6 @@ void Window::drawSpriteList() {
     mat4 ortho = fluxmath::ortho(0.0f, (float)fbw, (float)fbh, 0.0f, -1.0f, 1.0f);
 
     for (auto& sprite : sprites) {
-        /*float x = (sprite.position.x / fbw) * 2.0f - 1.0f;
-        float y = 1.0f - (sprite.position.y / fbh) * 2.0f;
-        float w = (sprite.size.x / fbw) * 2.0f;
-        float h = (sprite.size.y / fbh) * 2.0f;*/
-
         float x = sprite.position.x - (sprite.size.x / 2.0f);
         float y = sprite.position.y - (sprite.size.y / 2.0f);
         float w = sprite.size.x;

@@ -2,7 +2,6 @@
 
 int main() {
     Window Window;
-    Texture texture;
     Map map("map");
 
     Window.create();

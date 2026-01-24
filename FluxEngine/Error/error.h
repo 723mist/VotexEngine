@@ -2,6 +2,7 @@
 #define ERROR_H
 
 #include <iostream>
+#include <GLFW/glfw3.h>
 
 class Error {
 private:
@@ -9,6 +10,7 @@ private:
     const char* engineWARNING;
     const char* engineERROR;
     const char* engineCriticalERROR;
+    GLFWwindow* window;
 
 public:
     void addToInfoList(const char* receivedEngineINFO) { engineINFO = receivedEngineINFO; }
@@ -33,9 +35,11 @@ public:
         std::cerr << engineERROR << std::endl;
     }
 
-    void printCriticalEngineERROR() {
+    int printCriticalEngineERROR() {
         std::cerr << engineERROR << std::endl;
-        //Дописать КРИТИЧЕСКОЕ остановление движка(закрытие) 22.01.26 по МСК
+        glfwDestroyWindow(window);
+        glfwTerminate();
+        return -1;
     }
 };
 
