@@ -13,5 +13,7 @@
 #include "Camera/camera.h"
 #include "Script/script.h"
 #include "Error/error.h"
+#include "Script/script.h"
+#include "Script/scriptloader.h"
 
 #endif

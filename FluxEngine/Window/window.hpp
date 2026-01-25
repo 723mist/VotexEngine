@@ -22,6 +22,7 @@ private:
     Shader* spriteShader = nullptr;
     Map* currentMap = nullptr;
     Object object;
+    Error error;
     std::vector<Sprite> sprites;
 
     unsigned int VBO, VAO, EBO, lightVAO;
@@ -40,7 +41,7 @@ public:
     void drawSpriteList();
     virtual void render();
     virtual void close();
-    void loadGameScript();
+    void loadScript();
 };
 
 #endif

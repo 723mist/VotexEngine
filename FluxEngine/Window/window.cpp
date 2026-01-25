@@ -1,5 +1,5 @@
 #include "window.hpp"
-#include "Error/error.h"
+#include "Script/scriptloader.h"
 
 void glfw_error_callback(int error, const char* description) {
     std::cerr << "GLFW Error: " << error << ". " << "Description: " << description << std::endl;
@@ -13,7 +13,6 @@ bool Window::create(const char* title, int width, int height) {
     this->title = title;
     this->width = width;
     this->height = height;
-    Error error;
 
     glfwSetErrorCallback(glfw_error_callback);
 
@@ -142,13 +141,10 @@ void Window::drawSpriteList() {
     mat4 ortho = fluxmath::ortho(0.0f, (float)fbw, (float)fbh, 0.0f, -1.0f, 1.0f);
 
     for (auto& sprite : sprites) {
-        float x = sprite.position.x - (sprite.size.x / 2.0f);
-        float y = sprite.position.y - (sprite.size.y / 2.0f);
         float w = sprite.size.x;
         float h = sprite.size.y;
-
-        //std::cout << fbw << "x" << fbh << std::endl;
-        std::cout << x << "x" << y << std::endl;
+        float x = sprite.position.x - (w / 2);
+        float y = sprite.position.y + (h / 2);
 
         float vertices[] = {
             x,     y,     0.0f, 0.0f,
@@ -192,4 +188,9 @@ void Window::drawSpriteList() {
     }
 
     glDisable(GL_BLEND);
+}
+
+void Window::loadScript() {
+    auto& loader = ScriptLoader::GetInstance();
+    loader.RegisterScript<GameScript>("GameScript");
 }

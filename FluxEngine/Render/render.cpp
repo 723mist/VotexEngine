@@ -1,6 +1,6 @@
 #include "../Window/window.hpp"
-#include "Error/error.h"
 #include <iostream>
+#include <string>
 
 float FOV = 90;
 
@@ -14,16 +14,9 @@ void processInput(GLFWwindow *window) {
 }
 
 void Window::render() {
-    vec3 coral(1.0f, 0.5f, 0.31f);
-    vec3 lightColor(1.0f, 1.0f, 1.0f);
-    vec3 toyColor(1.0f, 0.5f, 0.31f);
-    vec3 result = lightColor * toyColor;
-    Error Error1;
-    //texture.LoadTexture("Content/water.jpg");
-
     while (!glfwWindowShouldClose(window)) {
         currentFrame = currentFrame + 1;
-        std::cout << currentFrame << std::endl;
+        //std::cout << currentFrame << std::endl;
         glfwPollEvents();
         glfwGetFramebufferSize(window, &width, &height);
         glViewport(0, 0, width, height);
@@ -69,10 +62,13 @@ void Window::render() {
             glDrawArrays(GL_TRIANGLES, 0, 36);
         }
 
+        glfwSetWindowTitle(window, (std::string(title) + " Frame: " + std::to_string(currentFrame)).c_str());
+
         drawSpriteList();
         glfwSwapBuffers(window);
     }
 }
+
 void Window::close() {
     glDeleteVertexArrays(1, &VAO);
     glDeleteBuffers(1, &VBO);

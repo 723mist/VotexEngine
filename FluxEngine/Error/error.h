@@ -24,19 +24,19 @@ public:
     const char* getCriticalERROR();
 
     void printEngineInfo() {
-        std::cout << engineINFO << std::endl;
+        std::cout << "[Engine-INFO]: " << engineINFO << std::endl;
     }
 
     void printEngineWarning() {
-        std::cout << engineWARNING << std::endl;
+        std::cout << "[Engine-WARNING]: " << engineWARNING << std::endl;
     }
 
     void printEngineERROR() {
-        std::cerr << engineERROR << std::endl;
+        std::cerr << "[Engine-ERROR]: "<< engineERROR << std::endl;
     }
 
     int printCriticalEngineERROR() {
-        std::cerr << engineERROR << std::endl;
+        std::cerr << "[CRITICAL-Engine-ERROR]" << engineERROR << std::endl;
         glfwDestroyWindow(window);
         glfwTerminate();
         return -1;

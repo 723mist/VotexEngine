@@ -1,3 +1,4 @@
+#include "Vector/vec.h"
 #include "flux_engine.h"
 
 int main() {
@@ -7,9 +8,9 @@ int main() {
     Window.create();
 
     Sprite player;
-    player.position = vec2(375, 275);
+    player.position = vec2(400, 300);
     player.size = vec2(50, 50);
-    player.setTexture("Content/placeholder.jpg");
+    player.setTexture("Content/wall.jpg");
 
     Object box("box");
     box.setTexture("Content/wall.jpg");

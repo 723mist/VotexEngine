@@ -3,9 +3,22 @@
 
 #include <string>
 
+class Object;
+
 class Script {
 public:
-    const char* SetScript(const char* filePath) { return filePath;};
+    virtual ~Script() = default;
+
+    virtual void OnStart();
+    virtual void OnUpdate(float deltaTime);
+    virtual void OnDestroy();
+
+    std::string name;
+    bool isEnabled = true;
+
+    Object* attachedObject = nullptr;
+
+    void SetObject(Object* obj) { attachedObject = obj; }
 };
 
 #endif
