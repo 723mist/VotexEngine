@@ -192,5 +192,5 @@ void Window::drawSpriteList() {
 
 void Window::loadScript() {
     auto& loader = ScriptLoader::GetInstance();
-    loader.RegisterScript<GameScript>("GameScript");
+    //loader.RegisterScript<GameScript>("GameScript");
 }
